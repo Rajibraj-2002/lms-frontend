@@ -14,7 +14,7 @@ const MyBooks = () => {
         if (token) {
             const fetchData = async () => {
                 try {
-                    const booksRes = await axios.get('https://lms-backend-production-d950.up.railway.app/api/user/my-books', { headers: { Authorization: `Bearer ${token}` } });
+                    const booksRes = await axios.get('http://localhost:8080/api/user/my-books', { headers: { Authorization: `Bearer ${token}` } });
                     setMyBooks(booksRes.data);
                 } catch (err) { console.error(err); }
                 finally { setIsLoading(false); }

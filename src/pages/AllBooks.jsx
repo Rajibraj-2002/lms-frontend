@@ -18,7 +18,7 @@ const AllBooks = () => {
         const endpoint = query ? `/api/admin/books/search?query=${query}` : '/api/admin/books/all';
         
         try {
-            const res = await axios.get(`https://lms-backend-production-d950.up.railway.app${endpoint}`, {
+            const res = await axios.get(`http://localhost:8080${endpoint}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBooks(res.data);

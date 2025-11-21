@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async';
 import '../components/BookSlider.css'; 
 import { useAuth } from '../context/AuthContext';
 
-const IMAGE_BASE_URL = 'https://lms-backend-production-d950.up.railway.app';
+const IMAGE_BASE_URL = 'http://localhost:8080';
 
 const BookVault = () => {
     const { token } = useAuth(); 

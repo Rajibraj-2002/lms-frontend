@@ -23,7 +23,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('https://lms-backend-production-d950.up.railway.app/api/auth/login', formData);
+            const res = await axios.post('http://localhost:8080/api/auth/login', formData);
             if (res.data.role.toUpperCase() !== formData.role) {
                 toast.error(`Role mismatch!`); 
                 return;
@@ -39,7 +39,7 @@ const Login = () => {
     const handleResetSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('https://lms-backend-production-d950.up.railway.app/api/auth/reset-password', resetData);
+            await axios.post('http://localhost:8080/api/auth/reset-password', resetData);
             toast.success("Password Reset Successfully! Please login.");
             setShowResetModal(false);
             setResetData({ username: '', adminKey: '', newPassword: '' });

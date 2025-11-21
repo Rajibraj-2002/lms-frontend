@@ -13,7 +13,7 @@ const ContactPage = () => {
         const fetchContact = async () => {
             try {
                 // 1. Fetch from the public endpoint
-                const res = await axios.get('https://lms-backend-production-d950.up.railway.app/api/public/librarian-contact');
+                const res = await axios.get('http://localhost:8080/api/public/librarian-contact');
                 setContact(res.data);
             } catch (err) {
                 console.error(err);
