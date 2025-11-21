@@ -13,7 +13,7 @@ const MyFines = () => {
         if (token) {
             const fetchData = async () => {
                 try {
-                    const finesRes = await axios.get('http://localhost:8080/api/user/my-fines', { headers: { Authorization: `Bearer ${token}` } });
+                    const finesRes = await axios.get('https://lms-backend-production-d950.up.railway.app/api/user/my-fines', { headers: { Authorization: `Bearer ${token}` } });
                     setFines(finesRes.data);
                 } catch (err) { console.error(err); }
                 finally { setIsLoading(false); }

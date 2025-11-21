@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
     // 3. Define stable connect/disconnect functions using useCallback (Fixes dependency warnings)
     const connectClient = useCallback((token) => {
         const client = new Client({
-            webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
+            webSocketFactory: () => new SockJS('https://lms-backend-production-d950.up.railway.app/ws'),
             connectHeaders: {
                 Authorization: `Bearer ${token}`,
             },

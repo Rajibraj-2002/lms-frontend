@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './BookSlider.css';
 
-const IMAGE_BASE_URL = 'http://localhost:8080';
+const IMAGE_BASE_URL = 'https://lms-backend-production-d950.up.railway.app';
 
 const BookSlider = () => {
     const [books, setBooks] = useState([]);

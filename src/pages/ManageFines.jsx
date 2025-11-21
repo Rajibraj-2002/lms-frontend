@@ -23,7 +23,7 @@ const ManageFines = () => {
         
         const fetchFines = async () => {
             try {
-                const res = await axios.get('http://localhost:8080/api/admin/fines/all', {
+                const res = await axios.get('https://lms-backend-production-d950.up.railway.app/api/admin/fines/all', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setFines(res.data);
@@ -32,7 +32,7 @@ const ManageFines = () => {
         
         const fetchMembers = async () => {
             try {
-                const res = await axios.get('http://localhost:8080/api/admin/users/all', {
+                const res = await axios.get('https://lms-backend-production-d950.up.railway.app/api/admin/users/all', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setMembers(res.data.filter(u => u.role === 'USER')); 
@@ -48,7 +48,7 @@ const ManageFines = () => {
     // --- FIX: UPDATED PAY FUNCTION ---
     const handlePayFine = async (fineId) => {
         try {
-            await axios.post(`http://localhost:8080/api/admin/fines/pay?fineId=${fineId}`, {}, {
+            await axios.post(`https://lms-backend-production-d950.up.railway.app/api/admin/fines/pay?fineId=${fineId}`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             
@@ -71,7 +71,7 @@ const ManageFines = () => {
     const handleManualFineSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:8080/api/admin/fines/add', formData, {
+            await axios.post('https://lms-backend-production-d950.up.railway.app/api/admin/fines/add', formData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success("Manual fine added successfully!");

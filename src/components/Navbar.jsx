@@ -40,8 +40,8 @@ const Navbar = () => {
         if (!token) return;
         
         let endpoint = '';
-        if (role === 'USER') endpoint = 'http://localhost:8080/api/user/my-notifications';
-        else if (role === 'LIBRARIAN') endpoint = 'http://localhost:8080/api/admin/my-notifications';
+        if (role === 'USER') endpoint = 'https://lms-backend-production-d950.up.railway.app/api/user/my-notifications';
+        else if (role === 'LIBRARIAN') endpoint = 'https://lms-backend-production-d950.up.railway.app/api/admin/my-notifications';
         else return;
 
         const fetchData = async () => {
@@ -50,7 +50,7 @@ const Navbar = () => {
                 let allNotifs = notifRes.data;
 
                 if (role === 'USER') {
-                    const booksRes = await axios.get('http://localhost:8080/api/user/my-books', { headers: { Authorization: `Bearer ${token}` } });
+                    const booksRes = await axios.get('https://lms-backend-production-d950.up.railway.app/api/user/my-books', { headers: { Authorization: `Bearer ${token}` } });
                     booksRes.data.forEach(book => {
                         const daysLeft = Math.ceil((new Date(book.dueDate) - new Date()) / (1000 * 60 * 60 * 24));
                         if (daysLeft <= 3 && daysLeft >= 0) {
@@ -90,8 +90,8 @@ const Navbar = () => {
         if (!showNotifDropdown && unreadCount > 0) {
             setUnreadCount(0); 
             const endpoint = role === 'LIBRARIAN' 
-                ? 'http://localhost:8080/api/admin/my-notifications/mark-read'
-                : 'http://localhost:8080/api/user/my-notifications/mark-read';
+                ? 'https://lms-backend-production-d950.up.railway.app/api/admin/my-notifications/mark-read'
+                : 'https://lms-backend-production-d950.up.railway.app/api/user/my-notifications/mark-read';
             try {
                 await axios.post(endpoint, {}, { headers: { Authorization: `Bearer ${token}` } });
             } catch (err) { console.error("Error marking read:", err); }
@@ -105,7 +105,7 @@ const Navbar = () => {
         
         if (!profileData && token) {
             try {
-                const res = await axios.get('http://localhost:8080/api/auth/my-profile', {
+                const res = await axios.get('https://lms-backend-production-d950.up.railway.app/api/auth/my-profile', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setProfileData(res.data);
@@ -126,7 +126,7 @@ const Navbar = () => {
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:8080/api/admin/change-password', passData, {
+            await axios.post('https://lms-backend-production-d950.up.railway.app/api/admin/change-password', passData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success("Password Changed Successfully!");

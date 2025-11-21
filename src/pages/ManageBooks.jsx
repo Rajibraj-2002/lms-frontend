@@ -35,7 +35,7 @@ const ManageBooks = () => {
         }
         const handler = setTimeout(async () => {
             try {
-                const res = await axios.get(`http://localhost:8080/api/public/books/search?query=${searchTerm}`, {
+                const res = await axios.get(`https://lms-backend-production-d950.up.railway.app/api/public/books/search?query=${searchTerm}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setSuggestions(res.data);
@@ -56,7 +56,7 @@ const ManageBooks = () => {
         data.append("book", JSON.stringify(formData));
 
         try {
-            await axios.post('http://localhost:8080/api/admin/books/add', data, {
+            await axios.post('https://lms-backend-production-d950.up.railway.app/api/admin/books/add', data, {
                 headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
             });
             

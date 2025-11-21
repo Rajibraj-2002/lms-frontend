@@ -12,7 +12,7 @@ const IssueBook = () => {
     const handleIssue = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:8080/api/admin/books/issue', issueData, {
+            await axios.post('https://lms-backend-production-d950.up.railway.app/api/admin/books/issue', issueData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success("Book(s) Issued Successfully!");
@@ -25,7 +25,7 @@ const IssueBook = () => {
     const handleReturn = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:8080/api/admin/books/return', returnData, {
+            const res = await axios.post('https://lms-backend-production-d950.up.railway.app/api/admin/books/return', returnData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success(res.data); 
