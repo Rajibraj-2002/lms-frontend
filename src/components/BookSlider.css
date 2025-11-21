@@ -1,0 +1,105 @@
+/* src/components/BookSlider.css (Fixed) */
+
+.book-slider-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 2rem 0;
+    position: relative; /* Needed for the fade effect */
+}
+
+/* Fade-out effect on the edges */
+.book-slider-container::before,
+.book-slider-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 2;
+}
+.book-slider-container::before {
+    left: 0;
+    background: linear-gradient(to right, var(--surface-color), transparent);
+}
+.book-slider-container::after {
+    right: 0;
+    background: linear-gradient(to left, var(--surface-color), transparent);
+}
+body.dark-mode .book-slider-container::before {
+    background: linear-gradient(to right, #334155, transparent);
+}
+body.dark-mode .book-slider-container::after {
+    background: linear-gradient(to left, #334155, transparent);
+}
+
+
+/* Animation track */
+.book-slider-track {
+    display: flex;
+    width: max-content;
+    /* This creates the smooth, continuous scroll */
+    animation: scroll 60s linear infinite;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.book-slider-track:hover {
+    animation-play-state: paused; /* Pauses on hover */
+}
+
+/* Individual slide item */
+.book-slide-item {
+    width: 200px; 
+    margin: 0 1rem; /* Adds spacing between books */
+}
+
+.book-placeholder-cover {
+    position: relative;
+    width: 100%;
+    height: 300px; 
+    background: var(--surface-color);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.book-slide-item:hover .book-placeholder-cover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+}
+
+.book-placeholder-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    transition: transform 0.5s ease;
+}
+
+.book-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    text-align: left;
+}
+.book-title-overlay {
+    display: block;
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.book-author-overlay {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
