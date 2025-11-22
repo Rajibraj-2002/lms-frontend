@@ -19,8 +19,8 @@ const UserDashboard = () => {
                 try {
                     // We still fetch books to get the *count* for the stat card
                     const [booksRes, finesRes] = await Promise.all([
-                        axios.get('http://localhost:8080/api/user/my-books', { headers: { Authorization: `Bearer ${token}` } }),
-                        axios.get('http://localhost:8080/api/user/my-fines', { headers: { Authorization: `Bearer ${token}` } }),
+                        axios.get('https://lms-backend-0jw8.onrender.com/api/user/my-books', { headers: { Authorization: `Bearer ${token}` } }),
+                        axios.get('https://lms-backend-0jw8.onrender.com/api/user/my-fines', { headers: { Authorization: `Bearer ${token}` } }),
                     ]);
                     const totalFine = finesRes.data.reduce((acc, curr) => acc + curr.amount, 0);
                     setStats({ books: booksRes.data.length, fines: totalFine });

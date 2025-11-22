@@ -13,7 +13,7 @@ const AllBorrowedBooks = () => {
         if (!token) return;
         setIsLoading(true);
         try {
-            const response = await axios.get('http://localhost:8080/api/admin/borrowed/all', {
+            const response = await axios.get('https://lms-backend-0jw8.onrender.com/api/admin/borrowed/all', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBorrowedBooks(response.data);

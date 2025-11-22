@@ -30,7 +30,7 @@ const RegisterLibrarian = () => {
             return;
         }
         try {
-            await axios.post('http://localhost:8080/api/auth/register/librarian', formData);
+            await axios.post('https://lms-backend-0jw8.onrender.com/api/auth/register/librarian', formData);
             toast.success("Registration Successful! Please log in.");
             navigate('/login');
         } catch (err) {

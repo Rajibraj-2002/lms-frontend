@@ -21,8 +21,8 @@ const TopBar = () => {
             const fetchData = async () => {
                 try {
                     const [notifRes, booksRes] = await Promise.all([
-                        axios.get('http://localhost:8080/api/user/my-notifications', { headers: { Authorization: `Bearer ${token}` } }),
-                        axios.get('http://localhost:8080/api/user/my-books', { headers: { Authorization: `Bearer ${token}` } })
+                        axios.get('https://lms-backend-0jw8.onrender.com/api/user/my-notifications', { headers: { Authorization: `Bearer ${token}` } }),
+                        axios.get('https://lms-backend-0jw8.onrender.com/api/user/my-books', { headers: { Authorization: `Bearer ${token}` } })
                     ]);
 
                     let allNotifs = [...notifRes.data];
@@ -55,7 +55,7 @@ const TopBar = () => {
         if (!showDropdown && unreadCount > 0) {
             setUnreadCount(0); 
             try {
-                await axios.post('http://localhost:8080/api/user/my-notifications/mark-read', {}, {
+                await axios.post('https://lms-backend-0jw8.onrender.com/api/user/my-notifications/mark-read', {}, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
             } catch (err) { console.error("Error marking read:", err); }

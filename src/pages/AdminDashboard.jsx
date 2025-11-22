@@ -18,7 +18,7 @@ const AdminDashboard = () => {
         if (!token) return; 
         const fetchStats = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/admin/stats', {
+                const response = await axios.get('https://lms-backend-0jw8.onrender.com/api/admin/stats', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setStats(response.data);
@@ -34,7 +34,7 @@ const AdminDashboard = () => {
         if (!searchQuery) return;
         const toastId = toast.loading('Searching...');
         try {
-            const res = await axios.get(`http://localhost:8080/api/admin/books/search?query=${searchQuery}`, {
+            const res = await axios.get(`https://lms-backend-0jw8.onrender.com/api/admin/books/search?query=${searchQuery}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setSearchResults(res.data);
