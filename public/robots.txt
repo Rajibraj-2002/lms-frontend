@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /login
+Allow: /register-librarian
+
+# Do not index private user/admin areas (Google can't login anyway)
+Disallow: /dashboard
+Disallow: /admin/
+Disallow: /book-vault
+Disallow: /my-books
+Disallow: /my-fines
+
+# Point to the sitemap
+Sitemap: https://lms-bhadrak.vercel.app/sitemap.xml
