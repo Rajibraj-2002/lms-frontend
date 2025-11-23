@@ -6,7 +6,8 @@ import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../context/AuthContext';
 
-const IMAGE_BASE_URL = 'https://lms-backend-0jw8.onrender.com'; // Ensure this matches your live backend
+// Use your live backend URL
+const IMAGE_BASE_URL = 'https://lms-backend-0jw8.onrender.com'; 
 
 const BookVault = () => {
     const { token } = useAuth(); 
@@ -98,7 +99,6 @@ const BookVault = () => {
                                 src={book.coverImageUrl} 
                                 alt={book.title} 
                                 className="book-card-image"
-                                // --- FIX: Replaced via.placeholder.com with placehold.co ---
                                 onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/200x300?text=No+Cover"; }}
                             />
                             <div className="book-card-content">
@@ -116,37 +116,58 @@ const BookVault = () => {
             {/* --- Book Details Modal --- */}
             {selectedBook && (
                 <div className="modal-overlay" onClick={() => setSelectedBook(null)}>
-                    <div className="modal-card" style={{textAlign: 'left', maxWidth: '600px'}} onClick={e => e.stopPropagation()}>
+                    <div className="modal-card" style={{textAlign: 'left', maxWidth: '600px', width: '90%'}} onClick={e => e.stopPropagation()}>
+                        
                         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <h2>{selectedBook.title}</h2>
+                            <h2 style={{margin: 0, fontSize: '1.5rem'}}>{selectedBook.title}</h2>
                             <button onClick={() => setSelectedBook(null)} style={{background: 'transparent', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: 'var(--text-main)'}}><FiX /></button>
                         </div>
-                        <p style={{color: 'var(--text-muted)', marginBottom: '1rem'}}>by {selectedBook.author}</p>
+                        <p style={{color: 'var(--text-muted)', marginBottom: '1.5rem'}}>by {selectedBook.author}</p>
                         
-                        <div style={{display: 'flex', gap: '1.5rem'}}>
+                        <div style={{display: 'flex', gap: '1.5rem', flexDirection: 'row', flexWrap: 'wrap'}}>
                             <img 
                                 src={selectedBook.coverImageUrl} 
                                 alt={selectedBook.title} 
-                                className="book-card-image"
-                                style={{width: '150px', height: '220px'}}
-                                // --- FIX: Replaced via.placeholder.com with placehold.co ---
+                                style={{
+                                    width: '140px', 
+                                    height: '210px', 
+                                    objectFit: 'cover', 
+                                    borderRadius: '8px',
+                                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                                }}
                                 onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/150x220?text=No+Cover"; }}
                             />
-                            <div style={{flex: 1}}>
-                                <div className="modal-book-description">
-                                    <p>{selectedBook.description || "No description available for this title."}</p>
+                            
+                            <div style={{flex: 1, minWidth: '200px'}}>
+                                {/* --- FIX: INLINE STYLES FOR SCROLLABLE DESCRIPTION --- */}
+                                <div style={{
+                                    maxHeight: '180px',
+                                    overflowY: 'auto',
+                                    paddingRight: '8px',
+                                    marginBottom: '1rem',
+                                    color: 'var(--text-main)',
+                                    lineHeight: '1.6',
+                                    fontSize: '0.95rem',
+                                    backgroundColor: 'rgba(0,0,0,0.02)', // Slight background to show area
+                                    padding: '10px',
+                                    borderRadius: '8px'
+                                }}>
+                                    {selectedBook.description || "No description available for this title."}
                                 </div>
-                                <hr style={{margin: '1rem 0', border: 'none', borderTop: '1px solid var(--border-color)'}} />
-                                <p><strong>ISBN:</strong> {selectedBook.isbn}</p>
-                                <p><strong>Status:</strong> 
-                                    <span className={`badge ${selectedBook.availableCopies > 0 ? 'badge-success' : 'badge-danger'}`} style={{marginLeft: '10px'}}>
-                                        {selectedBook.availableCopies > 0 ? `${selectedBook.availableCopies} Available` : 'On Loan'}
-                                    </span>
-                                </p>
+                                {/* --------------------------------------------------- */}
+
+                                <div style={{borderTop: '1px solid var(--border-color)', paddingTop: '1rem'}}>
+                                    <p style={{marginBottom: '0.5rem'}}><strong>ISBN:</strong> {selectedBook.isbn}</p>
+                                    <p><strong>Status:</strong> 
+                                        <span className={`badge ${selectedBook.availableCopies > 0 ? 'badge-success' : 'badge-danger'}`} style={{marginLeft: '10px'}}>
+                                            {selectedBook.availableCopies > 0 ? `${selectedBook.availableCopies} Available` : 'On Loan'}
+                                        </span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
-                        <div style={{marginTop: '1.5rem', display: 'flex', gap: '1rem'}}>
+                        <div style={{marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'flex-end'}}>
                             {selectedBook.availableCopies > 0 ? (
                                 <button className="btn-primary" onClick={handleWishToBorrow}>Wish to Borrow</button>
                             ) : (
