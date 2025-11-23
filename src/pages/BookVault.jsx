@@ -70,6 +70,7 @@ const BookVault = () => {
         <div>
             <Helmet> <title>Book Vault - LMS Prime</title> </Helmet>
             
+            {/* --- Top Bar with Search --- */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
                 <header className="main-header" style={{ marginBottom: 0, borderBottom: 'none', paddingBottom: 0 }}>
                     <h1>Book Vault</h1>
@@ -87,6 +88,7 @@ const BookVault = () => {
                 </div>
             </div>
             
+            {/* --- Book Grid --- */}
             <div className="book-vault-grid">
                 {isLoading ? (
                     <p style={{color: 'var(--text-muted)'}}>Loading books...</p>
@@ -139,7 +141,8 @@ const BookVault = () => {
                             />
                             
                             <div style={{flex: 1, minWidth: '200px'}}>
-                                {/* --- FIX: INLINE STYLES FOR SCROLLABLE DESCRIPTION --- */}
+                                
+                                {/* --- FIX: Scrollable Description Box --- */}
                                 <div style={{
                                     maxHeight: '180px',
                                     overflowY: 'auto',
@@ -148,13 +151,14 @@ const BookVault = () => {
                                     color: 'var(--text-main)',
                                     lineHeight: '1.6',
                                     fontSize: '0.95rem',
-                                    backgroundColor: 'rgba(0,0,0,0.02)', // Slight background to show area
+                                    backgroundColor: 'rgba(0,0,0,0.02)',
                                     padding: '10px',
-                                    borderRadius: '8px'
+                                    borderRadius: '8px',
+                                    border: '1px solid var(--border-color)'
                                 }}>
                                     {selectedBook.description || "No description available for this title."}
                                 </div>
-                                {/* --------------------------------------------------- */}
+                                {/* --------------------------------------- */}
 
                                 <div style={{borderTop: '1px solid var(--border-color)', paddingTop: '1rem'}}>
                                     <p style={{marginBottom: '0.5rem'}}><strong>ISBN:</strong> {selectedBook.isbn}</p>
