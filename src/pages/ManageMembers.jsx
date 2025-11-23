@@ -20,7 +20,7 @@ const ManageMembers = () => {
         if (!token) return; 
         const fetchMembers = async () => {
             try {
-                const res = await axios.get('http://localhost:8080/api/admin/users/all', {
+                const res = await axios.get('https://lms-backend-0jw8.onrender.com/api/admin/users/all', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setMembers(res.data.filter(u => u.role === 'USER'));
@@ -52,12 +52,12 @@ const ManageMembers = () => {
         e.preventDefault();
         try {
             if (editingUser) {
-                await axios.put(`http://localhost:8080/api/admin/users/update/${editingUser.id}`, formData, {
+                await axios.put(`https://lms-backend-0jw8.onrender.com/api/admin/users/update/${editingUser.id}`, formData, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 toast.success("Member updated successfully!");
             } else {
-                await axios.post('http://localhost:8080/api/admin/users/create', formData, {
+                await axios.post('https://lms-backend-0jw8.onrender.com/api/admin/users/create', formData, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 toast.success("Member added successfully!");
@@ -88,7 +88,7 @@ const ManageMembers = () => {
         }
 
         try {
-            await axios.delete(`http://localhost:8080/api/admin/users/delete/${memberId}`, {
+            await axios.delete(`https://lms-backend-0jw8.onrender.com/api/admin/users/delete/${memberId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success("Member deleted successfully.");
