@@ -1,9 +1,9 @@
 // src/pages/ManageMembers.jsx
-import React, { useEffect, useState, useMemo } from 'react'; // 1. Import useMemo
+import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast'; 
-import { FiEdit2, FiSearch } from 'react-icons/fi'; // 2. Import FiSearch
+import { FiEdit2, FiSearch, FiTrash2 } from 'react-icons/fi'; // 1. Import FiTrash2
 
 const ManageMembers = () => {
     const { token } = useAuth();
@@ -14,15 +14,13 @@ const ManageMembers = () => {
         name: '', mobileNumber: '', email: '', username: '', password: '' 
     });
     const [refreshKey, setRefreshKey] = useState(0);
-
-    // 3. NEW: State for the search term
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         if (!token) return; 
         const fetchMembers = async () => {
             try {
-                const res = await axios.get('https://lms-backend-0jw8.onrender.com/api/admin/users/all', {
+                const res = await axios.get('http://localhost:8080/api/admin/users/all', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setMembers(res.data.filter(u => u.role === 'USER'));
@@ -33,11 +31,8 @@ const ManageMembers = () => {
         fetchMembers();
     }, [token, refreshKey]);
 
-    // 4. NEW: Filter logic
-    // useMemo ensures this only re-runs when members or searchTerm changes
     const filteredMembers = useMemo(() => {
-        if (!searchTerm) return members; // If search is empty, show all
-        
+        if (!searchTerm) return members; 
         return members.filter(member => 
             member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             member.username.toLowerCase().includes(searchTerm.toLowerCase())
@@ -57,12 +52,12 @@ const ManageMembers = () => {
         e.preventDefault();
         try {
             if (editingUser) {
-                await axios.put(`https://lms-backend-0jw8.onrender.com/api/admin/users/update/${editingUser.id}`, formData, {
+                await axios.put(`http://localhost:8080/api/admin/users/update/${editingUser.id}`, formData, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 toast.success("Member updated successfully!");
             } else {
-                await axios.post('https://lms-backend-0jw8.onrender.com/api/admin/users/create', formData, {
+                await axios.post('http://localhost:8080/api/admin/users/create', formData, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 toast.success("Member added successfully!");
@@ -86,16 +81,32 @@ const ManageMembers = () => {
         });
     };
 
+    // --- NEW: DELETE HANDLER ---
+    const handleDeleteClick = async (memberId) => {
+        if (!window.confirm("Are you sure you want to delete this member? This cannot be undone.")) {
+            return;
+        }
+
+        try {
+            await axios.delete(`http://localhost:8080/api/admin/users/delete/${memberId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            toast.success("Member deleted successfully.");
+            setRefreshKey(oldKey => oldKey + 1); // Refresh list
+        } catch (err) {
+            console.error("Delete error:", err);
+            toast.error(err.response?.data || "Could not delete member.");
+        }
+    };
+
     return (
         <div>
             <header className="main-header"><h1>Manage Members</h1></header>
             
             <div className="manage-layout">
-                {/* --- ADD/UPDATE FORM --- */}
                 <div className="glass-card panel panel-form">
                     <h3>{editingUser ? 'Update Member' : 'Add New Member'}</h3>
                     <form onSubmit={handleSubmit} className="horizontal-form">
-                        {/* ... (form fields remain unchanged) ... */}
                         <div className="input-group">
                             <label>Name</label>
                             <input type="text" name="name" value={formData.name} onChange={handleChange} required />
@@ -129,10 +140,7 @@ const ManageMembers = () => {
                     </form>
                 </div>
 
-                {/* --- 5. REGISTERED MEMBERS TABLE (WITH SEARCH) --- */}
                 <div className="glass-card panel panel-list">
-                    
-                    {/* --- NEW: Header with Search Bar --- */}
                     <div className="panel-header">
                         <h3>Registered Members</h3>
                         <div className="search-container">
@@ -158,7 +166,6 @@ const ManageMembers = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* 6. Use filteredMembers here */}
                                 {filteredMembers.length === 0 ? (
                                     <tr className="empty-row"><td colSpan="5">No members found.</td></tr>
                                 ) : (
@@ -168,9 +175,24 @@ const ManageMembers = () => {
                                             <td>{m.username}</td>
                                             <td>{m.email}</td>
                                             <td>{m.mobileNumber}</td>
-                                            <td>
-                                                <button className="button-success" onClick={() => handleEditClick(m)} style={{padding: '6px 10px'}}>
+                                            <td style={{display: 'flex', gap: '10px'}}>
+                                                <button 
+                                                    className="button-success" 
+                                                    onClick={() => handleEditClick(m)}
+                                                    style={{padding: '6px 10px'}}
+                                                    title="Edit User"
+                                                >
                                                     <FiEdit2 />
+                                                </button>
+                                                
+                                                {/* --- NEW: DELETE BUTTON --- */}
+                                                <button 
+                                                    className="button-danger" 
+                                                    onClick={() => handleDeleteClick(m.id)}
+                                                    style={{padding: '6px 10px'}}
+                                                    title="Delete User"
+                                                >
+                                                    <FiTrash2 />
                                                 </button>
                                             </td>
                                         </tr>
