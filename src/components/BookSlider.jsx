@@ -34,7 +34,7 @@ const BookSlider = () => {
                                 <img 
                                     src={`${IMAGE_BASE_URL}${book.coverImageUrl}`} 
                                     alt={book.title} 
-                                    onError={(e) => { e.target.onerror = null; e.target.src="https://via.placeholder.com/200x300?text=LMS+Cover"; }} 
+                                    onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/200x300?text=No+Cover"; }} 
                                 />
                                 <div className="book-info">
                                     <span className="book-title-overlay">{book.title}</span>
