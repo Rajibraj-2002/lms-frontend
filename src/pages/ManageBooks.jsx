@@ -1,5 +1,5 @@
 // src/pages/ManageBooks.jsx
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
@@ -17,7 +17,6 @@ const ManageBooks = () => {
     
     const [isUpdateMode, setIsUpdateMode] = useState(false);
 
-    // --- THIS IS THE MISSING FUNCTION ---
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -25,7 +24,6 @@ const ManageBooks = () => {
             [name]: value
         }));
     };
-    // ------------------------------------
 
     // Autocomplete/Typeahead Logic
     useEffect(() => {
@@ -35,9 +33,11 @@ const ManageBooks = () => {
         }
         const handler = setTimeout(async () => {
             try {
-                const res = await axios.get(`https://lms-backend-0jw8.onrender.com/api/public/books/search?query=${searchTerm}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                // Use the live backend URL relative path (proxy will handle it if local, or it uses base URL if configured)
+                // Assuming axios base URL or direct path. For safety using direct path relative to current setup if not global.
+                // If you have a global axios setup, use it. Otherwise, direct URL:
+                // NOTE: Ensure this matches your deployed backend URL if running locally without proxy
+                const res = await axios.get(`https://lms-backend-0jw8.onrender.com/api/public/books/search?query=${searchTerm}`);
                 setSuggestions(res.data);
             } catch (err) { console.error("Autocomplete error:", err); }
         }, 300); 
@@ -89,7 +89,11 @@ const ManageBooks = () => {
             description: book.description || ''
         });
         setIsUpdateMode(true); 
-        toast.info(`Editing "${book.title}". Please re-upload the cover photo to update it.`);
+        
+        // --- FIX IS HERE: Removed toast.info() ---
+        toast(`Editing "${book.title}". Please re-upload the cover photo to update it.`, {
+            icon: 'ℹ️',
+        });
     };
 
     return (
