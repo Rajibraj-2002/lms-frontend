@@ -4,10 +4,9 @@ import axios from 'axios';
 import { FiSearch, FiX } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
-import '../components/BookSlider.css'; 
 import { useAuth } from '../context/AuthContext';
 
-const IMAGE_BASE_URL = 'https://lms-backend-0jw8.onrender.com';
+const IMAGE_BASE_URL = 'https://lms-backend-0jw8.onrender.com'; // Ensure this matches your live backend
 
 const BookVault = () => {
     const { token } = useAuth(); 
@@ -96,10 +95,11 @@ const BookVault = () => {
                     books.map(book => (
                         <div className="book-card" key={book.id} onClick={() => handleBookClick(book)}>
                             <img 
-                                src={`${IMAGE_BASE_URL}${book.coverImageUrl}`} 
+                                src={book.coverImageUrl} 
                                 alt={book.title} 
                                 className="book-card-image"
-                                onError={(e) => { e.target.onerror = null; e.target.src="https://via.placeholder.com/120x180?text=No+Cover"; }}
+                                // --- FIX: Replaced via.placeholder.com with placehold.co ---
+                                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/200x300?text=No+Cover"; }}
                             />
                             <div className="book-card-content">
                                 <h3>{book.title}</h3>
@@ -125,19 +125,17 @@ const BookVault = () => {
                         
                         <div style={{display: 'flex', gap: '1.5rem'}}>
                             <img 
-                                src={`${IMAGE_BASE_URL}${selectedBook.coverImageUrl}`} 
+                                src={selectedBook.coverImageUrl} 
                                 alt={selectedBook.title} 
                                 className="book-card-image"
                                 style={{width: '150px', height: '220px'}}
-                                onError={(e) => { e.target.onerror = null; e.target.src="https://via.placeholder.com/150x220?text=No+Cover"; }}
+                                // --- FIX: Replaced via.placeholder.com with placehold.co ---
+                                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/150x220?text=No+Cover"; }}
                             />
                             <div style={{flex: 1}}>
-                                
-                                {/* --- FIX: Added scrollable div --- */}
                                 <div className="modal-book-description">
                                     <p>{selectedBook.description || "No description available for this title."}</p>
                                 </div>
-                                
                                 <hr style={{margin: '1rem 0', border: 'none', borderTop: '1px solid var(--border-color)'}} />
                                 <p><strong>ISBN:</strong> {selectedBook.isbn}</p>
                                 <p><strong>Status:</strong> 

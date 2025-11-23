@@ -32,7 +32,8 @@ const BookSlider = () => {
                         <div className="book-slide-item" key={index}>
                             <div className="book-placeholder-cover">
                                 <img 
-                                    src={`${IMAGE_BASE_URL}${book.coverImageUrl}`} 
+                                    // src={`${IMAGE_BASE_URL}${book.coverImageUrl}`}
+                                    src={book.coverImageUrl} 
                                     alt={book.title} 
                                     onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/200x300?text=No+Cover"; }} 
                                 />
